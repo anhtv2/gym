@@ -37,8 +37,6 @@ package-lock.json
 !.vscode/extensions.json
 /.vscode
 
-#env
-.env
 
 #lock
 yarn.lock

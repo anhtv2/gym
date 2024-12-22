@@ -1,33 +1,3 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-yarn.lock
-package-lock.json
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-*.lock
-*-lock.json
-yarn.lock
-
 # Hệ điều hành
 .DS_Store
 Thumbs.db
@@ -73,4 +43,4 @@ out/
 *.tmp
 *.bak
 *.backup
-*.old
+*.
