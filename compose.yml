@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: gym_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+
+  server:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: nestjs_server
+    environment:
+      # Thêm biến môi trường nếu cần, ví dụ:
+      DATABASE_HOST: mysql
+      DATABASE_USERNAME: user
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: gym_database
+      FAST_API_URL: http://scheduler:8000
+    volumes:
+      - ./server_dump:/usr/src/app
+    depends_on:
+      - mysql
+    ports:
+      - "3000:3000"
+      - "9229:9229" 
+    # command: ["npm", "run", "start:debug"]  # Giả sử Dockerfile đã set CMD, nếu không bạn có thể override ở đây
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: admin_dashboard
+    volumes:
+      - ./admin_dump:/app
+    environment:
+      - VITE_BASE_URL=http://localhost:5173
+      - VITE_BASE_API=http://localhost:3000
+    ports:
+      - "5173:5173"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client_site
+    ports:
+      - "5174:5174"
+    volumes:
+      - ./client_dump:/app
+    environment:
+      - VITE_BACKEND_REACT_APP_URL=http://localhost:3000
+    depends_on:
+      - server
+      
+  scheduler:
+    build:
+      context: ./scheduler
+      dockerfile: Dockerfile
+    container_name: scheduler
+    
+   
+
