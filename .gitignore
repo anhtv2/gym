@@ -1,0 +1,46 @@
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+out/
+
+# Environment
+.env
+.env.local
+
+# Git
+*.orig
+
+# MacOS
+.DS_Store
+
+# Temp files
+*.tmp
+*.bak
+*.backup
+*.
