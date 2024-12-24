@@ -44,3 +44,7 @@ out/
 *.bak
 *.backup
 *.
+
+admin_dump
+client_dump
+server_dump
