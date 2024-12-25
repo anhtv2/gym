@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "sourceMap": true,       // Generates source maps
+    "inlineSources": true,   // Embeds source files into the sourcemaps
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,

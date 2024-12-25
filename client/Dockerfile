@@ -17,8 +17,8 @@ COPY . .
 EXPOSE 5174
 
 # Copy app to app_bak
-RUN cp -r /app /app_bak
+# RUN cp -r /app /app_bak
 
 # Copy từ bak sang /app Chạy ứng dụng ở chế độ dev, cho phép host 0.0.0.0 để truy cập từ bên ngoài container
 
-CMD ["sh", "-c", "cp -r /app_bak/* /app && npm run dev -- --host 0.0.0.0 --port 5174"]
+CMD ["sh", "-c", "npm run dev -- --host 0.0.0.0 --port 5174"]

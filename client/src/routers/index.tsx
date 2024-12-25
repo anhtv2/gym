@@ -38,6 +38,7 @@ const PageBookingDetail = LazyLoad(() => import("pages/private/member/Schedule/d
 const PageSchedule = LazyLoad(() => import("pages/private/member/Schedule"));
 const PageCreateBooking = LazyLoad(() => import("pages/private/member/Schedule/create"));
 const PageBodyInfo = LazyLoad(() => import("pages/private/member/BodyInfo"));
+const Profile = LazyLoad(() => import("pages/public/PageHome/Profile"));
 export const authPages: Page[] = [
   { path: "/login", component: Login },
   { path: "/signup", component: Register },
@@ -49,6 +50,7 @@ export const publicPages: Page[] = [
   { path: "/", component: PageHome },
   { path: "/trainers", component: PageTrainer },
   { path: "/trainers/:id", component: PageTrainerDetail },
+  { path: "/profile", component: Profile },
 ];
 
 export const memberPages: Page[] = [

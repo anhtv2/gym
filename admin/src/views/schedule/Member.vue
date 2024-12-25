@@ -165,7 +165,7 @@ const fetchTodayBooking = async () => {
     field: 'date',
     type: '=',
     value: today,
-    sort_by: 'time',
+    sort: 'time',
     sort_enum: 'asc',
   });
   todayBooking.value = data;

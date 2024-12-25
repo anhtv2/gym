@@ -34,4 +34,7 @@ export const endpoint = {
         getDetail: (id: string | number) => `/members/${id}`,
         getBody : (id: string | number) => `/members/${id}/measurements`,
     },
+    user: {
+        me: "/users/me",
+    }
 }

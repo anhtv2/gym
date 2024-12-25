@@ -27,6 +27,7 @@ export interface LocationStates {
   "/body-info"?: {};
 
   "/chatroom/:id"?: {};
+  "/profile"?: {};
 }
 
 export type PathName = keyof LocationStates;

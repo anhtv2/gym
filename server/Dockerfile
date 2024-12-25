@@ -15,8 +15,8 @@ EXPOSE 3000
 # Mở cổng debug Node.js
 EXPOSE 9229
 # Copy app to app_bak
-RUN cp -r /usr/src/app /app_bak
+# RUN cp -r /usr/src/app /app_bak
 
 
 # CMD chạy migrations, seed rồi mới chạy app ở chế độ debug
-CMD sh -c "cp -r /app_bak/* /usr/src/app && npm run migration:run && npm run seed:run && npm run start:debug"
+CMD sh -c "npm run migration:drop && npm run migration:run && npm run seed:run && npm run start:debug"

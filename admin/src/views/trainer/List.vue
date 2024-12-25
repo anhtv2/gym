@@ -228,7 +228,7 @@
     await getTrainers({
       page: page,
       take: limit,
-      sort_by: order,
+      sort: order,
       sort_enum: upperCaseValue(sort),
       field: filter ? filter.field : null,
       type: filter ? filter.type : null,

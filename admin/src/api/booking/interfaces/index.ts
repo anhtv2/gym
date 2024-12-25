@@ -12,7 +12,7 @@ export interface GetBookingsRequest {
   page?: number;
   take?: number;
   sort_enum?: string;
-  sort_by?: string;
+  sort?: string;
   field?: string;
   type?: string;
   value?: string;

@@ -132,7 +132,7 @@ const RequestFunc = async (url, config, params) => {
   await getWorkouts({
     page: page,
     take: take,
-    sort_by: order,
+    sort: order,
     sort_enum: upperCaseValue(sort),
     field: filter ? filter.field : null,
     type: filter ? filter.type : null,

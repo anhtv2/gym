@@ -12,7 +12,7 @@ export const getTrainers = async (
   if (request.page) params.append('page', request.page.toString());
   if (request.take) params.append('take', request.take.toString());
   if (request.sort_enum) params.append('sort_enum', request.sort_enum);
-  if (request.sort_by) params.append('sort_by', request.sort_by);
+  if (request.sort) params.append('sort', request.sort);
   if (request.status) params.append('status', request.status);
   if (request.field && request.type && request.value) {
     params.append('field', request.field);

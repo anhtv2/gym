@@ -416,6 +416,8 @@ export class BookingsService extends PageService {
     }
 
     validBookings.forEach((booking: any) => delete booking.id);
+    // thêm status 1 vào tất cả các booking
+    validBookings.forEach((booking: any) => booking.status = 1);
 
     const savedBookings = await this.bookingRepository.save(validBookings);
     return new PageResponseDto(savedBookings);

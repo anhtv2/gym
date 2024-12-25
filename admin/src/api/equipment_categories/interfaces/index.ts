@@ -2,7 +2,7 @@ export interface GetEquipmentCategoriesRequest {
   page?: number;
   take?: number;
   sort_enum?: string;
-  sort_by?: string;
+  sort?: string;
   status?: string;
   field?: string;
   type?: string;

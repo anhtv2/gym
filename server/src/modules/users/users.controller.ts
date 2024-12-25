@@ -29,7 +29,7 @@ import { imageFileFilter } from '../../supports/helpers';
 @ApiTags('users')
 @UseInterceptors(TransformInterceptor)
 @ApiBearerAuth('access-token')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('at-jwt'))
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -40,6 +40,12 @@ export class UsersController {
     @Query() getListUsersDto: GetListUsersDto,
   ): Promise<PageResponseDto<User>> {
     return this.usersService.getUsers(getListUsersDto);
+  }
+
+  @Get('/me')
+  @ApiOkResponse({ description: 'Show user detail' })
+  getMe(@Req() req: any): Promise<PageResponseDto<User>> {
+    return this.usersService.getUserById(req.user.id);
   }
 
   @Get('/:id')

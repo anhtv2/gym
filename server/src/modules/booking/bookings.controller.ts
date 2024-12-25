@@ -35,6 +35,8 @@ export class BookingsController {
     @UserInRequest() user: User,
     @Body() dto: MemberCreateListBookingDto,
   ) {
+    console.log('dto', dto);
+    
     return this.bookingsService.memberCreateListBooking(user, dto);
   }
 
