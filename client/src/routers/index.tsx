@@ -39,6 +39,8 @@ const PageSchedule = LazyLoad(() => import("pages/private/member/Schedule"));
 const PageCreateBooking = LazyLoad(() => import("pages/private/member/Schedule/create"));
 const PageBodyInfo = LazyLoad(() => import("pages/private/member/BodyInfo"));
 const Profile = LazyLoad(() => import("pages/public/PageHome/Profile"));
+const PageTrainerSchedule = LazyLoad(() => import("pages/public/Trainer/Schedule"));
+const PageTrainerBookingDetail = LazyLoad(() => import("pages/public/Trainer/Schedule/detail"));
 export const authPages: Page[] = [
   { path: "/login", component: Login },
   { path: "/signup", component: Register },
@@ -61,8 +63,9 @@ export const memberPages: Page[] = [
 ];
 
 export const trainerPages: Page[] = [
-  { path: "/trainer/booking-history", component: PageTrainer },
   { path: "/body-info", component: PageTrainer },
+  { path: "/trainer/schedules", component: PageTrainerSchedule },
+  { path: "/trainer/schedules/:id", component: PageTrainerBookingDetail },
 ];
 
 const MyRoutes = () => {

@@ -83,8 +83,8 @@ export default class BookingSeeder extends Seeder {
   }
 
   private getRandomDateInCurrentMonth(month: number, year: number): Date {
-    const start = new Date('2024-07-01');
-    const end = new Date('2024-07-30'); // Last day of the month
+    const start = new Date('2025-01-01');
+    const end = new Date('2025-01-30'); // Last day of the month
     return new Date(
       start.getTime() + Math.random() * (end.getTime() - start.getTime()),
     );

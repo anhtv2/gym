@@ -33,12 +33,6 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/trainer/booking-history",
-    name: "Lịch sử đặt lịch",
-    role: Role.TRAINER,
-  },
-  {
-    id: ncNanoId(),
     href: "/trainer/schedules",
     name: "Lịch dạy",
     role: Role.TRAINER,

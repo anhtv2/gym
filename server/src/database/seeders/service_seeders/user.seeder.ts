@@ -18,7 +18,7 @@ export default class UserSeeder extends Seeder {
         }),
         phone: fakerVI.phone.number().replace(/\s/g, ''),
         email: `user${i}@gmail.com`,
-        password: await bcrypt.hash('password', 10),
+        password: await bcrypt.hash('123123', 10),
         facebook: faker.internet.url(),
         address: fakerVI.location.streetAddress(),
       });

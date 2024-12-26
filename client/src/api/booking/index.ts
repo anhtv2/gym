@@ -74,7 +74,17 @@ export const getListBooking = async (): Promise<{ data: BookingDataType[] }> => 
     return response.data;
 }
 
+export const getTrainerListBooking = async (): Promise<{ data: BookingDataType[] }> => {
+    const response = await getAxiosInstance().get(endpoint.booking.getListTrainer);
+    return response.data;
+}
+
 export const getBookingDetail = async (id: number): Promise<{ data: BookingDataType }> => {
     const response = await getAxiosInstance().get(endpoint.booking.getDetail(id), { params: { id } });
+    return response.data;
+}
+
+export const getTrainerBookingDetail = async (id: number): Promise<{ data: BookingDataType }> => {
+    const response = await getAxiosInstance().get(endpoint.booking.getTrainerDetail(id), { params: { id } });
     return response.data;
 }

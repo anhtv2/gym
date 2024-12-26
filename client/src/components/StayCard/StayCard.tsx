@@ -1,114 +1,69 @@
 import React, { FC } from "react";
 import GallerySlider from "components/GallerySlider/GallerySlider";
-import { DEMO_STAY_LISTINGS } from "assets/data/listings";
-import { StayDataType } from "assets/data/types";
-import StartRating from "components/StartRating/StartRating";
 import { Link } from "react-router-dom";
 import BtnLikeIcon from "components/BtnLikeIcon/BtnLikeIcon";
-import SaleOffBadge from "components/SaleOffBadge/SaleOffBadge";
-import Badge from "shared/Badge/Badge";
+import StartRating from "components/StartRating/StartRating";
+
+// Định nghĩa kiểu dữ liệu cho 1 bài tập (workout)
+export interface WorkoutDataType {
+  id: number;
+  name: string;
+  thumbnail: string;
+  duration: number;
+  // Nếu bạn muốn thêm rating hoặc description, có thể thêm ở đây
+  // rating?: number;
+  // description?: string;
+}
 
 export interface StayCardProps {
   className?: string;
-  data?: StayDataType;
-  size?: "default" | "small";
+  data?: WorkoutDataType; 
 }
 
-const DEMO_DATA = DEMO_STAY_LISTINGS[0];
+const StayCard: FC<StayCardProps> = ({ className = "", data }) => {
+  // Nếu không có data, return null để tránh lỗi
+  if (!data) {
+    return null;
+  }
+  
+  // Lấy các trường cần hiển thị
+  const { id, name, thumbnail, duration } = data;
 
-const StayCard: FC<StayCardProps> = ({
-  size = "default",
-  className = "",
-  data = DEMO_DATA,
-}) => {
-  const {
-    galleryImgs,
-    listingCategory,
-    address,
-    title,
-    bedrooms,
-    href,
-    like,
-    saleOff,
-    isAds,
-    price,
-    reviewStart,
-    reviewCount,
-    id,
-  } = data;
+  // Tạo 1 mảng ảnh (GallerySlider nhận mảng)
+  // Nếu GallerySlider của bạn yêu cầu { src: string }[] thì chuyển thành [{ src: thumbnail }]
+  const galleryImgs = [thumbnail];
 
+  // Hoặc link sang trang chi tiết - tuỳ ý
+  const href = "#"; 
+
+  // Slider 1 ảnh + nút Like
   const renderSliderGallery = () => {
     return (
       <div className="relative w-full">
         <GallerySlider
           uniqueID={`StayCard_${id}`}
-          ratioClass="aspect-w-4 aspect-h-3 "
+          ratioClass="aspect-w-4 aspect-h-3"
           galleryImgs={galleryImgs}
           href={href}
         />
-        <BtnLikeIcon isLiked={like} className="absolute right-3 top-3 z-[1]" />
-        {saleOff && <SaleOffBadge className="absolute left-3 top-3" />}
+        {/* Nếu muốn nút Like, tuỳ chỉnh isLiked */}
+        <BtnLikeIcon isLiked={false} className="absolute right-3 top-3 z-[1]" />
       </div>
     );
   };
 
+  // Hiển thị tên bài tập, duration, rating (nếu cần)
   const renderContent = () => {
     return (
-      <div className={size === "default" ? "p-4 space-y-4" : "p-3 space-y-2"}>
-        <div className="space-y-2">
-          <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {listingCategory.name} · {bedrooms} beds
-          </span>
-          <div className="flex items-center space-x-2">
-            {isAds && <Badge name="ADS" color="green" />}
-            <h2
-              className={` font-medium capitalize ${
-                size === "default" ? "text-lg" : "text-base"
-              }`}
-            >
-              <span className="line-clamp-1">{title}</span>
-            </h2>
-          </div>
-          <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-2">
-            {size === "default" && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            )}
-            <span className="">{address}</span>
-          </div>
-        </div>
-        <div className="w-14 border-b border-neutral-100 dark:border-neutral-800"></div>
-        <div className="flex justify-between items-center">
-          <span className="text-base font-semibold">
-            {price}
-            {` `}
-            {size === "default" && (
-              <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-                /night
-              </span>
-            )}
-          </span>
-          {!!reviewStart && (
-            <StartRating reviewCount={reviewCount} point={reviewStart} />
-          )}
+      <div className="p-4 space-y-4">
+        {/* Tên bài tập */}
+        <h2 className="text-lg font-semibold line-clamp-1">{name}</h2>
+
+        {/* Duration, rating */}
+        <div className="flex items-center justify-between">
+          <span className="font-medium">{duration} phút</span>
+          {/* Rating demo 5 sao + 99 reviews */}
+          <StartRating point={5} reviewCount={99} />
         </div>
       </div>
     );
@@ -116,8 +71,9 @@ const StayCard: FC<StayCardProps> = ({
 
   return (
     <div
-      className={`nc-StayCard group relative bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-2xl overflow-hidden will-change-transform hover:shadow-xl transition-shadow ${className}`}
-      data-nc-id="StayCard"
+      className={`nc-StayCard group relative bg-white dark:bg-neutral-900 
+      border border-neutral-100 dark:border-neutral-800 rounded-2xl overflow-hidden 
+      hover:shadow-xl transition-shadow ${className}`}
     >
       {renderSliderGallery()}
       <Link to={href}>{renderContent()}</Link>

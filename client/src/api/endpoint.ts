@@ -19,7 +19,9 @@ export const endpoint = {
     booking: {
         create: "/bookings",
         getList: "/bookings",
+        getListTrainer: "/trainer/bookings",
         getDetail: (id: string | number) => `/bookings/${id}`,
+        getTrainerDetail: (id: string | number) => `/trainer/bookings/${id}`,
     },
     serviceClasses: {
         memberList: "/service_classes/member",

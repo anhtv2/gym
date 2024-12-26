@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { Booking } from '../../entities/booking.entity';
@@ -257,6 +257,73 @@ export class BookingsService extends PageService {
     return new PageResponseDto(result);
   }
 
+  /**
+   * Lấy tất cả booking của 1 trainer
+   */
+  async getTrainerBookings(user: User): Promise<PageResponseDto<any>> {
+    // Lấy trainerId từ user
+    const trainerId = user?.staff?.trainer?.id;
+
+    if (!trainerId) {
+      // Phòng trường hợp user không có trainerId
+      throw new ForbiddenException('Bạn không có quyền truy cập');
+    }
+
+    const bookings = await this.bookingRepository
+      .createQueryBuilder('booking')
+      .leftJoin('booking.workout', 'workout')
+      .leftJoin('booking.trainer', 'BookingTrainer')
+      .leftJoin('BookingTrainer.staff', 'BookingTrainerStaff')
+      .leftJoin('BookingTrainerStaff.user', 'BookingTrainerUser')
+      .leftJoin('booking.member', 'member')
+      .leftJoin('member.user', 'memberUser')
+      // Chỉ lấy booking có trainer_id = trainerId
+      .where('booking.trainer_id = :trainerId', { trainerId })
+      .select([
+        // Tuỳ ý bạn muốn select những gì
+        'booking.id AS bookingId',
+        'booking.date AS date',
+        'booking.start_time AS startTime',
+        'booking.end_time AS endTime',
+        'booking.status AS status',
+        'workout.id AS workoutId',
+        'workout.name AS workoutName',
+        'memberUser.name AS memberName',
+        'BookingTrainerUser.name AS trainerName',
+      ])
+      .orderBy('booking.date', 'DESC')
+      .addOrderBy('booking.start_time', 'DESC')
+      .getRawMany();
+
+    return new PageResponseDto(bookings);
+  }
+
+  /**
+   * Lấy chi tiết 1 booking của trainer
+   */
+  async getOneTrainerBooking(user: User, bookingId: number): Promise<PageResponseDto<any>> {
+    const trainerId = user?.staff?.trainer?.id;
+    if (!trainerId) {
+      throw new ForbiddenException('Bạn không có quyền');
+    }
+    // Tìm booking
+    const booking = await this.bookingRepository
+      .createQueryBuilder('booking')
+      .leftJoinAndSelect('booking.workout', 'workout')
+      .leftJoinAndSelect('booking.member', 'member')
+      .leftJoinAndSelect('member.user', 'memberUser')
+      .where('booking.id = :bookingId', { bookingId })
+      .andWhere('booking.trainer_id = :trainerId', { trainerId })
+      .getOne();
+
+    if (!booking) {
+      throw new NotFoundException('Không tìm thấy booking hoặc bạn không có quyền truy cập');
+    }
+
+    return new PageResponseDto(booking);
+  }
+
+
   async solverSchedule(startDate: string, endDate: string, extraBookings: any[]) {
     // Get all trainers
     let counter = 1;
@@ -354,7 +421,7 @@ export class BookingsService extends PageService {
       )
       .flat();
 
-    if (formattedBookings.length < 50 && formattedTrainers.length > 0) {
+    if (formattedBookings.length < 10 && formattedTrainers.length > 0) {
       return new PageResponseDto({
         status: true,
         message: 'Số lượng lịch đặt quá ít',
@@ -417,7 +484,7 @@ export class BookingsService extends PageService {
 
     validBookings.forEach((booking: any) => delete booking.id);
     // thêm status 1 vào tất cả các booking
-    validBookings.forEach((booking: any) => booking.status = 1);
+    validBookings.forEach((booking: any) => booking.status = 0);
 
     const savedBookings = await this.bookingRepository.save(validBookings);
     return new PageResponseDto(savedBookings);

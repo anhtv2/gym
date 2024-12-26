@@ -31,7 +31,7 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
       <div className="relative aspect-w-1 aspect-h-1 sm:aspect-w-4 sm:aspect-h-3 lg:aspect-w-16 lg:aspect-h-9 xl:aspect-h-8 ">
         <img
           className="absolute inset-0 object-cover rounded-xl"
-          src="https://shtheme.org/demosd/gymee/wp-content/uploads/2020/11/breadcrumb-bg-3.jpg?size=large"
+          src="/cover.jpg"
           alt="hero"
         />
       </div>

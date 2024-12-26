@@ -191,4 +191,5 @@ def solve_scheduling(request):
     print("Số lượng buổi đặt chỗ được phân công:", len(assigned_bookings))
         
     
+        
     return {"status": status, "solution": solution, "violations": violations}

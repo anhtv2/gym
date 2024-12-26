@@ -8,7 +8,7 @@ export const getDetailWorkout = async (id: string | number) => {
     return response.data;
 }
 
-export const getListWorkoutsSelect = async () => {
+export const getDetailWorkout = async () => {
     const response = await axiosInstance.get(endpoint.workout.getList, {});
     return response.data;
 }

@@ -11,8 +11,8 @@ export default class DaysOffRequestSeeder extends Seeder {
 
     for (const trainer of trainers) {
       const date = faker.date.between({
-        from: new Date('2024-01-01'),
-        to: new Date('2024-08-08'),
+        from: new Date('2024-03-01'),
+        to: new Date('2024-12-12'),
       });
       const note = faker.lorem.sentence();
       const status = faker.number.int({ min: 1, max: 3 });

@@ -6,6 +6,7 @@ import { BookingsService } from './bookings.service';
 import { Module, Session } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { AdminBookingsController } from './admin-bookings.controller';
+import { TrainerBookingsController } from './trainer-bookings.controller';
 import { Equipment } from '../../entities/equipment.entity';
 import { EquipmentCategory } from '../../entities/equipment-category.entity';
 import { FastApiModule } from '../fastapi/fastapi.module';
@@ -30,7 +31,7 @@ import { UniqueTrainingTimesValidator } from '../../validators/unique-training-t
     ServicesModule,
     SessionsModule,
   ],
-  controllers: [BookingsController, AdminBookingsController],
+  controllers: [BookingsController, AdminBookingsController, TrainerBookingsController],
   providers: [BookingsService, UniqueTrainingTimesValidator],
   exports: [BookingsService],
 })

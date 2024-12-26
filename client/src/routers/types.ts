@@ -22,7 +22,6 @@ export interface LocationStates {
 
   "/trainer/schedules"?: {};
   "/trainer/booking/:id"?: {};
-  "/trainer/booking-history"?: {};
 
   "/body-info"?: {};
 
